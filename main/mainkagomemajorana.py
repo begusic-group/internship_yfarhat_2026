@@ -1,7 +1,15 @@
-import sys
-sys.path.append('../')
-from spd.MajoranaRepresentation import *
-from spd.SparsePauliDynamics import *
+try:
+    from spd.SparsePauliDynamics import *
+    from spd.BaseOperatorRepresentation import * 
+except ImportError:
+    print("\n" + "="*60)
+    print("REQUIRED PACKAGE 'spd' NOT FOUND")
+    print("="*60)
+    print("This notebook relies on the 'spd' package.")
+    print("Please install it before proceeding:\n")
+    print("   pip install git+https://github.com/tbegusic/spd.git")
+    print("="*60 + "\n")
+    raise
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -26,12 +34,12 @@ nlist = [(i, j) for i, j, _ in weighted_edges if i != j]
 
 t = 1
 U = 1
-dt = 0.02
-step = 1
+dt = 0.12
+step = 6
 nsteps = int(step/dt)
-threshold = 2.**-18
+S = 6
 
-S_vals = [2, 4, 6, 8]
+thresholds = [2.**-21, 2.**-22, 2.**-23, 2.**-24, 2.**-25]
 
 nmodes = 2*nq
 ham_hop = FermionicOp({},nmodes)
@@ -79,7 +87,7 @@ for q in range(nq):
 results = {}
 string_counts = {}
 
-for S in S_vals:
+for threshold in thresholds:
     countstr = []
     def process(obs_rep):
         """Compute expectation value of the observable representation with the initial state."""
@@ -94,8 +102,8 @@ for S in S_vals:
     sim = Simulation(obs_majorana.copy(), op, threshold=threshold)
     r = sim.run_dynamics(nsteps, process=process, process_every=step)
 
-    results[str(S)] = np.array(r)
-    string_counts[str(S)] = np.array(countstr)
+    results[str(threshold)] = np.array(r)
+    string_counts[str(threshold)] = np.array(countstr)
 
 
 

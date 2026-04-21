@@ -1,7 +1,15 @@
-import sys
-sys.path.append('../')
-from spd.MajoranaRepresentation import *
-from spd.SparsePauliDynamics import *
+try:
+    from spd.SparsePauliDynamics import *
+    from spd.BaseOperatorRepresentation import * 
+except ImportError:
+    print("\n" + "="*60)
+    print("REQUIRED PACKAGE 'spd' NOT FOUND")
+    print("="*60)
+    print("This notebook relies on the 'spd' package.")
+    print("Please install it before proceeding:\n")
+    print("   pip install git+https://github.com/tbegusic/spd.git")
+    print("="*60 + "\n")
+    raise
 
 import numpy as np
 import matplotlib.pyplot as plt
