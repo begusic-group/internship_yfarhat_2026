@@ -48,7 +48,7 @@ def exp_val_func(obs):
     return exp_val
 
 ops = dt*h_tot #trotterized evoltion operator
-threshold = [2.**-12, 2.**-14, 2.**-16, 2.**-18, 2.**-20]
+threshold = [2.**-14, 2.**-16, 2.**-18, 2.**-20]
 results = {}
 for thresh in threshold:
     obs_t.clear()
