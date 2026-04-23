@@ -56,4 +56,4 @@ for thresh in threshold:
     r = sim.run_dynamics(nsteps, process=exp_val_func, process_every = step)
     results[str(thresh)] = np.array(r)
 
-np.savez('kagome_spd32.npz',**results)
+np.savez('kagomespd_results.npz',**results)
