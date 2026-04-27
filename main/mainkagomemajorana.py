@@ -66,8 +66,8 @@ for q in range(nq):
 
 
 central = (nq - 1)//2
-obs_up_idx = 2 * central
-obs_ferm = FermionicOp({f'+_{obs_up_idx} -_{obs_up_idx}': 1}, num_spin_orbitals=nmodes)
+obs_central_idx = 2 * central
+obs_ferm = FermionicOp({f'+_{obs_central_idx} -_{obs_central_idx}': 1}, num_spin_orbitals=nmodes)
 
 
 obs_majorana = MajoranaRepresentation.from_fermionic_op(obs_ferm)
