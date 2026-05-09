@@ -88,7 +88,7 @@ for S in S_vals:
         return exp_val
     
 
-    sim = Simulation(obs_majorana.copy(), op, threshold=threshold)
+    sim = Simulation(obs_majorana, op, threshold=threshold)
 
     r = sim.run_dynamics(nsteps, process=process, process_every=1)
 

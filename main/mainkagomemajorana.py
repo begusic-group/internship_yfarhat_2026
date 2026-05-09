@@ -35,8 +35,8 @@ nlist = [(i, j) for i, j, _ in weighted_edges if i != j]
 t = 1
 U = 1
 dt = 0.12
-step = 6
-nsteps = int(step/dt)
+totalt = 6
+nsteps = int(totalt/dt)
 S = 6
 
 thresholds = [2.**-21, 2.**-22, 2.**-23, 2.**-24, 2.**-25]
@@ -99,8 +99,8 @@ for threshold in thresholds:
         obs_rep.coeffs = obs_rep.coeffs[trunc]
         return exp_val
 
-    sim = Simulation(obs_majorana.copy(), op, threshold=threshold)
-    r = sim.run_dynamics(nsteps, process=process, process_every=step)
+    sim = Simulation(obs_majorana, op, threshold=threshold)
+    r = sim.run_dynamics(nsteps, process=process, process_every=totalt)
 
     results[str(threshold)] = np.array(r)
     string_counts[str(threshold)] = np.array(countstr)

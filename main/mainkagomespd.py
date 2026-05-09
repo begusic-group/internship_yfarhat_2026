@@ -35,14 +35,12 @@ hx = SparsePauliOp.from_sparse_list([("X", [i], h) for i in range(nq)], num_qubi
 h_tot = hzz + hx
 obs = SparsePauliOp.from_sparse_list([("Z", [(nq-1)//2], 1.0)], num_qubits=nq)
 
-step = 1
+totalt = 1
 dt = 0.02
-nsteps = int(step/dt)
+nsteps = int(totalt/dt)
 
 
-obs_t = [] #to store copies of obs at each time
 def exp_val_func(obs):
-    obs_t.append(obs.copy())
     exp_val = np.sum(obs.coeffs[obs.ztype()])
     print(exp_val, obs.size)
     return exp_val
@@ -51,9 +49,8 @@ ops = dt*h_tot #trotterized evoltion operator
 threshold = [2.**-14, 2.**-16, 2.**-18, 2.**-20]
 results = {}
 for thresh in threshold:
-    obs_t.clear()
     sim = Simulation.from_pauli_list(obs, ops, threshold=thresh, nprocs=1)
-    r = sim.run_dynamics(nsteps, process=exp_val_func, process_every = step)
+    r = sim.run_dynamics(nsteps, process=exp_val_func, process_every = totalt)
     results[str(thresh)] = np.array(r)
 
 np.savez('kagomespd_results.npz',**results)
